@@ -1,9 +1,12 @@
-FROM node:200-alpine AS buuild
+FROM node:20-alpine AS build
 
 WORKDIR /app 
 
-COPY packag*.json ./
-RUN npm run build 
+ARG VITE_API_GW
+ENV VITE_API_GW=$VITE_API_GW
+
+COPY package*.json ./
+RUN npm install 
 
 COPY . .
 RUN npm run build 
