@@ -12,6 +12,7 @@ export default function Navbar({ variant = "default" }) {
 
   const links = [
     { name: "Inicio", path: "/" },
+    { name: "Chat", path: "/chat" },
   ];
 
   return (

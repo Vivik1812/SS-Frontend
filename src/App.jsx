@@ -7,6 +7,8 @@ import HomeView from "./modules/SYS/view/HomeView";
 import ProteccionRuta from "./modules/SYS/view/components/ProteccionRutas";
 import PerfilView from "./modules/SYS/view/PerfilView";
 import CrearPublicacionView from "./modules/SYS/view/CrearPublicacionView";
+import ChatView from "./modules/SYS/view/ChatView";
+
 function App() {
   const location = useLocation();
   const isLogin = location.pathname === "/login";
@@ -25,6 +27,14 @@ function App() {
             element={
               <ProteccionRuta>
                 <CrearPublicacionView />
+              </ProteccionRuta>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <ProteccionRuta>
+                <ChatView />
               </ProteccionRuta>
             }
           />
