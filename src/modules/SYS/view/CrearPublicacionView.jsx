@@ -155,7 +155,7 @@ export default function CrearPublicacionView() {
 
         setErrores(erroresEncontrados);
 
-        i(Object.keys(erroresEncontrados).length > 0)
+        if(Object.keys(erroresEncontrados).length > 0)
         {
             return;
         }
@@ -209,12 +209,12 @@ export default function CrearPublicacionView() {
                 </div>
 
                 {/* Titulo */}
-                <div classname="mb-3">
-                    <label className="form-label fw-semibold">Titulo <span classname= "text-danger">*</span></label>
-                    <input type="text" classname= "form-control" placeholder= "Ej: Gato perdido" c
+                <div className="mb-3">
+                    <label className="form-label fw-semibold">Titulo <span className= "text-danger">*</span></label>
+                    <input type="text" className= "form-control" placeholder= "Ej: Gato perdido" c
                     value={form.titulo} onChange={(e) => updateForm('titulo', e.target.value)} required />
                     {errores.titulo && (
-                        <p classname="text-red-500 text-sm">
+                        <p className="text-red-500 text-sm">
                             {errores.titulo}
                         </p>
                     )}
