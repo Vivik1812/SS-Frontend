@@ -4,7 +4,7 @@ import { obtenerToken } from '../../service/AuthService';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const WS_URL = 'http://localhost:8083/ws';
+const WS_URL = 'https://ss-notificaciones-service-oiq5.onrender.com/ws';
 
 function parseJwt(token) {
     try {

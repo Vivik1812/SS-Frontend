@@ -1,5 +1,4 @@
-const NOTIFICACIONES_URL = 'https://ss-notificaciones-service-oiq5.onrender.com';
-
+const NOTIFICACIONES_URL = 'https://ss-notificaciones-service-oiq5.onrender.com/api/v1/notificaciones';
 const NotificacionService = {
     getNotificaciones: async (usuarioId, token) => {
         const response = await fetch(`${NOTIFICACIONES_URL}/usuario/${usuarioId}`, {
