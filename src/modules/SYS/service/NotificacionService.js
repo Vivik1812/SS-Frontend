@@ -1,4 +1,4 @@
-const NOTIFICACIONES_URL = 'http://localhost:9000/api/v1/notificaciones';
+const NOTIFICACIONES_URL = 'https://ss-notificaciones-service-oiq5.onrender.com';
 
 const NotificacionService = {
     getNotificaciones: async (usuarioId, token) => {
