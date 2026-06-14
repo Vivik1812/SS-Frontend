@@ -8,6 +8,7 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { obtenerUsuarioActual } from '../service/AuthService';
 import PublicacionService from '../service/PublicacionService';
 import { CENTRO_SANTIAGO } from './components/MapView';
+import { validarPublicacion } from '../utils/PublicacionValidador';
 
 //Fix iconos 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -30,6 +31,7 @@ function SeleccionarPunto({onPuntoSeleccionado}){
 export default function CrearPublicacionView() {
     const navigate = useNavigate();
 
+    const [errores, setErrores] = useState({});
     const [usuarioId, setUsuarioId] = useState(null);
     useEffect(() => {
         obtenerUsuarioActual()
@@ -147,6 +149,17 @@ export default function CrearPublicacionView() {
             return;
         }
 
+        const erroresEncontrados = validarPublicacion(
+            form, mascota, tipoPublicacion, puntoMarcado, usuarioId
+        );
+
+        setErrores(erroresEncontrados);
+
+        i(Object.keys(erroresEncontrados).length > 0)
+        {
+            return;
+        }
+
         try {
             const nuevaPublicacion = {
                 titulo: form.titulo,
@@ -200,6 +213,11 @@ export default function CrearPublicacionView() {
                     <label className="form-label fw-semibold">Titulo <span classname= "text-danger">*</span></label>
                     <input type="text" classname= "form-control" placeholder= "Ej: Gato perdido" c
                     value={form.titulo} onChange={(e) => updateForm('titulo', e.target.value)} required />
+                    {errores.titulo && (
+                        <p classname="text-red-500 text-sm">
+                            {errores.titulo}
+                        </p>
+                    )}
                 </div>
 
                 {/* Tipo de mascota */}
@@ -219,12 +237,23 @@ export default function CrearPublicacionView() {
                 <div className="mb-3">
                     <label className="form-label fw-semibold">Nombre de la mascota<span className="text-danger">*</span></label>
                     <input type="text" className= "form-control" placeholder= "Ej: Eddie" value={mascota.nombreMascota} onChange={(e) => updateMascota('nombreMascota', e.target.value)} required />
+
+{errores.nombreMascota && (
+    <p className="text-red-500 text-sm">
+        {errores.nombreMascota}
+    </p>
+)}
                 </div>
 
                 {/*Raza */}
                 <div className="mb-3">
                     <label className="form-label fw-semibold">Raza</label>
                     <input type="text" placeholder= "Ej: Labrador" className= "form-control" value={mascota.raza} onChange={(e) => updateMascota('raza', e.target.value)} />
+                    {errores.especie && (
+    <p className="text-red-500 text-sm">
+        {errores.especie}
+    </p>
+)}
                 </div>
 
                 {/*Color */}
@@ -301,11 +330,23 @@ export default function CrearPublicacionView() {
                         </div>
                     )}
                 </div>
+                {errores.ubicacion && (
+    <p className="text-red-500 text-sm">
+        {errores.ubicacion}
+    </p>
+)}
 
                 {/*Descripción */}
                 <div className="form-group">
                     <label>Descripción</label>
                     <textarea rows={5} placeholder= "Descripción  "value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} />
+                        
+                    {errores.descripcion && (
+                        <p className="text-red-500 text-sm">
+                            {errores.descripcion}
+                        </p>
+                    )}
+
                 </div>
 
                 {/* Fotos */}
