@@ -16,7 +16,7 @@ const useAutenticacionViewModel = () =>{
         }
 
         navegar("/login", {replace: true});
-    },[parametros], navegar);
+    },[parametros, navegar]);
 }
 
 export default useAutenticacionViewModel;
