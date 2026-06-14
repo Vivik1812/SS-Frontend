@@ -347,18 +347,12 @@ export default function CrearPublicacionView() {
                 {/*Descripción */}
                 <div className="form-group">
                     <label>Descripción</label>
-<<<<<<< HEAD
-                    <textarea rows={5} placeholder="Descripción" value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} required />
-=======
-                    <textarea rows={5} placeholder= "Descripción  "value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} />
-                        
+                    <textarea rows={5} placeholder="Descripción" value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} required />                        
                     {errores.descripcion && (
                         <p className="text-red-500 text-sm">
                             {errores.descripcion}
                         </p>
                     )}
-
->>>>>>> f74e1a0f353aa3e38313cc9931b73032cead58f8
                 </div>
 
                 {/* Fotos */}
