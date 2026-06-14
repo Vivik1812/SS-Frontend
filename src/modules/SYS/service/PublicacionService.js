@@ -5,7 +5,7 @@ import apiGW from "./ApiGateway";
      //todas las publicaciones
      static async getPublicaciones() {
          try {
-             const response = await apiGW.get('/api/v1/publicaciones/');
+             const response = await apiGW.get('/api/v1/publicaciones');
              return response.data;
          } catch (error) {
              console.error('Error al obtener publicaciones:', error);
@@ -27,7 +27,7 @@ import apiGW from "./ApiGateway";
      //crear publicacion
      static async createPublicacion(publicacion) {
          try {
-             const response = await apiGW.post('/api/v1/publicaciones/', publicacion);
+             const response = await apiGW.post('/api/v1/publicaciones', publicacion);
              return response.data;
          } catch (error) {
              console.error('Error al crear la publicación:', error);
