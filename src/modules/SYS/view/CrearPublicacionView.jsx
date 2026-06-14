@@ -106,6 +106,14 @@ export default function CrearPublicacionView() {
             setErrorUbicacion('Tu navegador no soporta geolocalizacion');
             return;
         }
+        if (!form.descripcion || form.descripcion.trim().length < 2) {
+            alert('Debes agregar una descripción');
+            return;
+        }
+        if (!usuarioId) {
+            alert('No se pudo obtener tu usuario. Inicia sesión nuevamente.');
+            return;
+        }
         setCargandoGPS(true);
         navigator.geolocation.getCurrentPosition(
             async(pos) => {
@@ -301,7 +309,7 @@ export default function CrearPublicacionView() {
                 {/*Descripción */}
                 <div className="form-group">
                     <label>Descripción</label>
-                    <textarea rows={5} placeholder= "Descripción  "value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} />
+                    <textarea rows={5} placeholder="Descripción" value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} required />
                 </div>
 
                 {/* Fotos */}
