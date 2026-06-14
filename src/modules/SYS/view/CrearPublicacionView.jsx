@@ -165,6 +165,10 @@ export default function CrearPublicacionView() {
                 },
             };
 
+            console.log(JSON.stringify(nuevaPublicacion, null, 2));
+            console.log("usuarioId", usuarioId);
+            
+
             await PublicacionService.createPublicacion(nuevaPublicacion);
             alert('Publicación creada con éxito');
             navigate('/');
@@ -182,11 +186,11 @@ export default function CrearPublicacionView() {
                 <div className="form-group">
                     <label>Tipo de publicación</label>
                     <div className="tipo-row">
-                        <button type="button" onClick={()=> setTipoPublicacion('Perdido')}
-                        className={tipoPublicacion === 'Perdido' ? 'btn-activo-perdido' : 'btn-inactivo'}>
+                        <button type="button" onClick={()=> setTipoPublicacion('PERDIDO')}
+                        className={tipoPublicacion === 'PERDIDO' ? 'btn-activo-perdido' : 'btn-inactivo'}>
                         Perdido</button>
-                        <button type="button" onClick={()=> setTipoPublicacion('Encontrado')}
-                        className={tipoPublicacion === 'Encontrado' ? 'btn-activo-encontrado' : 'btn-inactivo'}>
+                        <button type="button" onClick={()=> setTipoPublicacion('ENCONTRADO')}
+                        className={tipoPublicacion === 'ENCONTRADO' ? 'btn-activo-encontrado' : 'btn-inactivo'}>
                         Encontrado</button>
                     </div>
                 </div>
@@ -264,7 +268,7 @@ export default function CrearPublicacionView() {
 
                     <button type="button" onClick={usarMiUbicacion} disabled={cargandoGPS}
                         className ={`mb-2 ${cargandoGPS ? 'btn-inactivo' : 'btn-activo'}`}>
-                        {cargandoGPS ? 'Obteniendo ubicación...' : '📍 Usar mi ubicación'}
+                        {cargandoGPS ? 'Obteniendo ubicación...' : 'Usar mi ubicación'}
                     </button>
                     {errorUbicacion && (
                         <p className= "text-danger small">{errorUbicacion}</p>
