@@ -8,6 +8,7 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { obtenerUsuarioActual } from '../service/AuthService';
 import PublicacionService from '../service/PublicacionService';
 import { CENTRO_SANTIAGO } from './components/MapView';
+import { validarPublicacion } from '../utils/PublicacionValidador';
 
 //Fix iconos 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -30,6 +31,7 @@ function SeleccionarPunto({onPuntoSeleccionado}){
 export default function CrearPublicacionView() {
     const navigate = useNavigate();
 
+    const [errores, setErrores] = useState({});
     const [usuarioId, setUsuarioId] = useState(null);
     useEffect(() => {
         obtenerUsuarioActual()
@@ -155,6 +157,17 @@ export default function CrearPublicacionView() {
             return;
         }
 
+        const erroresEncontrados = validarPublicacion(
+            form, mascota, tipoPublicacion, puntoMarcado, usuarioId
+        );
+
+        setErrores(erroresEncontrados);
+
+        if(Object.keys(erroresEncontrados).length > 0)
+        {
+            return;
+        }
+
         try {
             const nuevaPublicacion = {
                 titulo: form.titulo,
@@ -173,6 +186,10 @@ export default function CrearPublicacionView() {
                 },
             };
 
+            console.log(JSON.stringify(nuevaPublicacion, null, 2));
+            console.log("usuarioId", usuarioId);
+            
+
             await PublicacionService.createPublicacion(nuevaPublicacion);
             alert('Publicación creada con éxito');
             navigate('/');
@@ -190,20 +207,25 @@ export default function CrearPublicacionView() {
                 <div className="form-group">
                     <label>Tipo de publicación</label>
                     <div className="tipo-row">
-                        <button type="button" onClick={()=> setTipoPublicacion('Perdido')}
-                        className={tipoPublicacion === 'Perdido' ? 'btn-activo-perdido' : 'btn-inactivo'}>
+                        <button type="button" onClick={()=> setTipoPublicacion('PERDIDO')}
+                        className={tipoPublicacion === 'PERDIDO' ? 'btn-activo-perdido' : 'btn-inactivo'}>
                         Perdido</button>
-                        <button type="button" onClick={()=> setTipoPublicacion('Encontrado')}
-                        className={tipoPublicacion === 'Encontrado' ? 'btn-activo-encontrado' : 'btn-inactivo'}>
+                        <button type="button" onClick={()=> setTipoPublicacion('ENCONTRADO')}
+                        className={tipoPublicacion === 'ENCONTRADO' ? 'btn-activo-encontrado' : 'btn-inactivo'}>
                         Encontrado</button>
                     </div>
                 </div>
 
                 {/* Titulo */}
-                <div classname="mb-3">
-                    <label className="form-label fw-semibold">Titulo <span classname= "text-danger">*</span></label>
-                    <input type="text" classname= "form-control" placeholder= "Ej: Gato perdido" c
+                <div className="mb-3">
+                    <label className="form-label fw-semibold">Titulo <span className= "text-danger">*</span></label>
+                    <input type="text" className= "form-control" placeholder= "Ej: Gato perdido" c
                     value={form.titulo} onChange={(e) => updateForm('titulo', e.target.value)} required />
+                    {errores.titulo && (
+                        <p className="text-red-500 text-sm">
+                            {errores.titulo}
+                        </p>
+                    )}
                 </div>
 
                 {/* Tipo de mascota */}
@@ -223,12 +245,23 @@ export default function CrearPublicacionView() {
                 <div className="mb-3">
                     <label className="form-label fw-semibold">Nombre de la mascota<span className="text-danger">*</span></label>
                     <input type="text" className= "form-control" placeholder= "Ej: Eddie" value={mascota.nombreMascota} onChange={(e) => updateMascota('nombreMascota', e.target.value)} required />
+
+{errores.nombreMascota && (
+    <p className="text-red-500 text-sm">
+        {errores.nombreMascota}
+    </p>
+)}
                 </div>
 
                 {/*Raza */}
                 <div className="mb-3">
                     <label className="form-label fw-semibold">Raza</label>
                     <input type="text" placeholder= "Ej: Labrador" className= "form-control" value={mascota.raza} onChange={(e) => updateMascota('raza', e.target.value)} />
+                    {errores.especie && (
+    <p className="text-red-500 text-sm">
+        {errores.especie}
+    </p>
+)}
                 </div>
 
                 {/*Color */}
@@ -272,7 +305,7 @@ export default function CrearPublicacionView() {
 
                     <button type="button" onClick={usarMiUbicacion} disabled={cargandoGPS}
                         className ={`mb-2 ${cargandoGPS ? 'btn-inactivo' : 'btn-activo'}`}>
-                        {cargandoGPS ? 'Obteniendo ubicación...' : '📍 Usar mi ubicación'}
+                        {cargandoGPS ? 'Obteniendo ubicación...' : 'Usar mi ubicación'}
                     </button>
                     {errorUbicacion && (
                         <p className= "text-danger small">{errorUbicacion}</p>
@@ -305,11 +338,27 @@ export default function CrearPublicacionView() {
                         </div>
                     )}
                 </div>
+                {errores.ubicacion && (
+    <p className="text-red-500 text-sm">
+        {errores.ubicacion}
+    </p>
+)}
 
                 {/*Descripción */}
                 <div className="form-group">
                     <label>Descripción</label>
+<<<<<<< HEAD
                     <textarea rows={5} placeholder="Descripción" value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} required />
+=======
+                    <textarea rows={5} placeholder= "Descripción  "value={form.descripcion} onChange={(e) => updateForm('descripcion', e.target.value)} />
+                        
+                    {errores.descripcion && (
+                        <p className="text-red-500 text-sm">
+                            {errores.descripcion}
+                        </p>
+                    )}
+
+>>>>>>> f74e1a0f353aa3e38313cc9931b73032cead58f8
                 </div>
 
                 {/* Fotos */}
