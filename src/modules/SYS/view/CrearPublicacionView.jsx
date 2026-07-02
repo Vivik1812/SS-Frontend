@@ -255,13 +255,13 @@ export default function CrearPublicacionView() {
 
                 {/*Raza */}
                 <div className="mb-3">
-                    <label className="form-label fw-semibold">Raza</label>
-                    <input type="text" placeholder= "Ej: Labrador" className= "form-control" value={mascota.raza} onChange={(e) => updateMascota('raza', e.target.value)} />
-                    {errores.especie && (
-    <p className="text-red-500 text-sm">
-        {errores.especie}
-    </p>
-)}
+                    <label className="form-label fw-semibold">Raza<span className="text-danger">*</span></label>
+                    <input type="text" placeholder= "Ej: Labrador" className= "form-control" value={mascota.raza} onChange={(e) => updateMascota('raza', e.target.value)} required/>
+                    {errores.raza && (
+                        <p className="text-red-500 text-sm">
+                            {errores.raza}
+                        </p>
+                    )}
                 </div>
 
                 {/*Color */}
@@ -385,6 +385,10 @@ export default function CrearPublicacionView() {
                         Acepto los términos y condiciones
                     </label>
                 </div>
+
+                {errores.usuario && (
+                    <p className="text-danger small">{errores.usuario}</p>
+                )}
 
                 {/* Botón de enviar */}
                 <button type="submit" className="btn-submit">Publicar aviso</button>
