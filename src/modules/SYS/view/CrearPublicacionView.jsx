@@ -169,6 +169,12 @@ export default function CrearPublicacionView() {
         }
 
         try {
+            const imagenIds = [];
+            for (const foto of fotos) {
+                const subida = await PublicacionService.subirImagen(foto.file);
+                imagenIds.push(subida.id);
+            }
+
             const nuevaPublicacion = {
                 titulo: form.titulo,
                 descripcion: form.descripcion,
@@ -176,6 +182,7 @@ export default function CrearPublicacionView() {
                 latitud: puntoMarcado[0],
                 longitud: puntoMarcado[1],
                 usuarioId: usuarioId,
+                imagenIds: imagenIds,
                 mascota: {
                     nombreMascota: mascota.nombreMascota,
                     especie: mascota.especie,
@@ -185,10 +192,6 @@ export default function CrearPublicacionView() {
                     tamanio: mascota.tamanio,
                 },
             };
-
-            console.log(JSON.stringify(nuevaPublicacion, null, 2));
-            console.log("usuarioId", usuarioId);
-            
 
             await PublicacionService.createPublicacion(nuevaPublicacion);
             alert('Publicación creada con éxito');
@@ -246,11 +249,11 @@ export default function CrearPublicacionView() {
                     <label className="form-label fw-semibold">Nombre de la mascota<span className="text-danger">*</span></label>
                     <input type="text" className= "form-control" placeholder= "Ej: Eddie" value={mascota.nombreMascota} onChange={(e) => updateMascota('nombreMascota', e.target.value)} required />
 
-{errores.nombreMascota && (
-    <p className="text-red-500 text-sm">
-        {errores.nombreMascota}
-    </p>
-)}
+                {errores.nombreMascota && (
+                    <p className="text-red-500 text-sm">
+                        {errores.nombreMascota}
+                    </p>
+                )}
                 </div>
 
                 {/*Raza */}
@@ -339,10 +342,10 @@ export default function CrearPublicacionView() {
                     )}
                 </div>
                 {errores.ubicacion && (
-    <p className="text-red-500 text-sm">
-        {errores.ubicacion}
-    </p>
-)}
+                    <p className="text-red-500 text-sm">
+                        {errores.ubicacion}
+                    </p>
+                )}
 
                 {/*Descripción */}
                 <div className="form-group">

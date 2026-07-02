@@ -2,6 +2,21 @@ import apiGW from "./ApiGateway";
 
  export default class PublicacionService {
 
+    //subir una foto y obtener su id/url
+    static async subirImagen(file){
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await apiGW.post('/api/v1/imagenes', formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error al subir la imagen:', error);
+            throw error;
+        }
+    }
+
      //todas las publicaciones
      static async getPublicaciones() {
          try {
