@@ -37,14 +37,14 @@ const useHomeViewModel = () => {
 
                 //Marcadores en el mapa
                 const nuevosMarcadores = data
-                    .filter(p => p.ubicacion?.latitud && p.ubicacion?.longitud)
+                    .filter(p => p.latitud && p.longitud)
                     .map(p => ({
                         id: p.id,
-                        posicion: [p.ubicacion.latitud, p.ubicacion.longitud],
-                        titulo: p.titulo || `Mascota ${p.tipo}`,
-                        descripcion: p.mascota?.nombre
-                            ? `${p.mascota.nombre} — ${p.tipo}`
-                            : p.tipo,
+                        posicion: [p.latitud, p.longitud],
+                        titulo: p.titulo || `Mascota ${p.estado}`,
+                        descripcion: p.mascota?.nombreMascota
+                            ? `${p.mascota.nombreMascota} — ${p.estado}`
+                            : p.estado,
                     }));
                 
                     setMarcadores(nuevosMarcadores);
