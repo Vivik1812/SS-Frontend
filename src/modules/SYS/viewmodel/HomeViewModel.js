@@ -11,6 +11,7 @@ const useHomeViewModel = () => {
     const [parametros] = useSearchParams();
     const navigate = useNavigate();
     const [marcadores, setMarcadores] = useState([]);
+    const [publicaciones, setPublicaciones] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
 
@@ -57,7 +58,7 @@ const useHomeViewModel = () => {
         };
         cargarPublicaciones();
     }, []);
-    return {marcadores,cargando,error};
+    return {marcadores,publicaciones,cargando,error};
 };
 
 export default useHomeViewModel;
