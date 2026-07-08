@@ -7,10 +7,19 @@ import MapView from "./components/MapView";
 
 function TarjetaPublicacion({ publicacion }) {
   const esPerdido = publicacion.estado === "PERDIDO";
+  const foto = publicacion.imagenIds?.[0];
 
   return (
     <div className="col-12 col-md-6 col-lg-4">
-      <div className="card h-100 border-0 shadow-sm rounded-4">
+      <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+        {foto && (
+          <img
+            src={foto}
+            alt={publicacion.titulo}
+            className="w-100"
+            style={{ height: "180px", objectFit: "cover" }}
+          />
+        )}
         <div className="card-body">
           <span
             className={`badge rounded-pill mb-2 ${esPerdido ? "text-bg-danger" : "text-bg-success"}`}
