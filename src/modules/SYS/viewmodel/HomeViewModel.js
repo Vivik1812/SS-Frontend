@@ -36,6 +36,8 @@ const useHomeViewModel = () => {
                 setCargando(true);
                 const data = await PublicacionService.getPublicaciones();
 
+                setPublicaciones(data);
+
                 //Marcadores en el mapa
                 const nuevosMarcadores = data
                     .filter(p => p.latitud && p.longitud)
