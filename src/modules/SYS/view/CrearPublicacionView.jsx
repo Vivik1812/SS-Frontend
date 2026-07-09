@@ -144,19 +144,6 @@ export default function CrearPublicacionView() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(!tipoPublicacion){
-            alert('Debes seleccionar el tipo de publicación (Perdido / Encontrado)');
-            return;
-        }
-        if(!mascota.especie){
-            alert('Debes seleccionar el tipo de mascota');
-            return;
-        }
-        if(!puntoMarcado){
-            alert('Debes marcar la ubicacion en el mapa antes de publicar');
-            return;
-        }
-
         const erroresEncontrados = validarPublicacion(
             form, mascota, tipoPublicacion, puntoMarcado, usuarioId
         );
@@ -217,6 +204,11 @@ export default function CrearPublicacionView() {
                         className={tipoPublicacion === 'ENCONTRADO' ? 'btn-activo-encontrado' : 'btn-inactivo'}>
                         Encontrado</button>
                     </div>
+                    {errores.estado && (
+                        <p className="text-red-500 text-sm">
+                            {errores.estado}
+                        </p>
+                    )}
                 </div>
 
                 {/* Titulo */}
@@ -242,6 +234,11 @@ export default function CrearPublicacionView() {
                             </button>
                         ))}
                     </div>
+                    {errores.especie && (
+                        <p className="text-red-500 text-sm">
+                            {errores.especie}
+                        </p>
+                    )}
                 </div>
 
                 {/* Nombre de la mascota */}
@@ -271,6 +268,11 @@ export default function CrearPublicacionView() {
                 <div className="mb-3">
                     <label className="form-label fw-semibold">Color<span className="text-danger">*</span></label>
                     <input type="text" placeholder= "Ej: Negro" className= "form-control" value={mascota.color} onChange={(e) => updateMascota('color', e.target.value)} required />
+                    {errores.color && (
+                        <p className="text-red-500 text-sm">
+                            {errores.color}
+                        </p>
+                    )}
                 </div>
 
                 {/*Sexo */}
@@ -284,6 +286,11 @@ export default function CrearPublicacionView() {
                             </button>
                         ))}
                     </div>
+                    {errores.sexo && (
+                        <p className="text-red-500 text-sm">
+                            {errores.sexo}
+                        </p>
+                    )}
                 </div>
 
                 {/*Tamaño */}
@@ -297,6 +304,11 @@ export default function CrearPublicacionView() {
                             </button>
                         ))}
                     </div>
+                    {errores.tamanio && (
+                        <p className="text-red-500 text-sm">
+                            {errores.tamanio}
+                        </p>
+                    )}
                 </div>
 
                 {/* Ubicación con mapa */}
